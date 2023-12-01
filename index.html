@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathInvaders</title> 
+    <style>
+        @font-face {
+            font-family: 'PixelEmulator-xq08';
+            src: url('/assets/font/PixelEmulator-xq08.ttf') format('truetype');
+        }
+    </style>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="shipGame">
+        <div class="score"></div>
+        <div class="startScreen">
+            <p>SELECCIONE UNA DIFICULTAD<br><br>
+            </p>
+            <div>
+                <span class="level">
+                    <button id="easy">FACIL</button>
+                    <button id="moderate">MODERADO</button>
+                    <button id="difficult">DIFICIL</button>
+                </span>
+            </div>
+            <p>
+                <br>USE LAS FLECHAS PARA MOVERSE <br>
+                SI CHOCA OTRA NAVE PIERDES.  
+            </p>
+        </div>
+        <div class="gameArea"></div>
+    </div>
+    <div class="custom-dialog hide">
+        <p id="dialog-text"></p>
+        <div id="options-container">
+        <br>
+        <button type="button" class="option-btn"></button>
+        <button type="button" class="option-btn"></button>
+        <button type="button" class="option-btn"></button>
+        <button type="button" class="option-btn"></button>
+        </div>
+    </div>
+    <div class="score-text"></div>
+    <button class="report">R</button>
+    <button class="about">!</button>
+    <div class="about-tuto hide">
+        <p>w - MOVER ARRIBA</p>
+        <p>S - MOVER ABAJO</p>
+        <p>A - MOVER IZQUIERDA</p>
+        <p>D - MOVER DERECHA</p>
+        <p>R - GENERAR REPORTE</p>
+        <p>! - CONTROLES</p>
+        <p>CLICK PARA CERRAR</p>
+    </div>
+    <script src="gameHandler.js"></script>
+</body>
+</html>
