@@ -11,6 +11,9 @@ let gameOver = new Audio();
 let explosionAudio = new Audio();
 let shootAudio = new Audio();
 let log = "";
+let correctAnswers = "";
+let badAnswers = "";
+let totalAnswers = "";
 
 gameStart.src = "assets/audio/game.mp3";
 gameOver.src = "assets/audio/game_over.mp3";
@@ -195,6 +198,7 @@ function handleCollisionWithEnemy() {
     gameOver.play();
 
     const { problem, answer } = generateMathProblem();
+    totalAnswers++;
 
     const dialog = document.querySelector('.custom-dialog');
     const dialogText = document.getElementById('dialog-text');
@@ -218,16 +222,23 @@ function handleCollisionWithEnemy() {
 
     dialog.classList.remove('hide');
 
-    optionsContainer.addEventListener('click', (e) => {
+    function handleOptionClick(e) {
+        document.querySelector('.custom-dialog').classList.add('hide');
+        optionsContainer.removeEventListener('click', handleOptionClick); // Remove the event listener
+
         if (e.target.dataset.answer == answer) {
+            correctAnswers++;
             log += `Pregunta: ${problem}, Respuesta Correcta: ${e.target.dataset.answer}\n`;
             startGame(player.score, player.x, player.y);
         } else {
+            alert("si");
+            badAnswers++;
             log += `Pregunta: ${problem}, Respuesta Erronea: ${e.target.dataset.answer}\n`;
             onGameOver();
         }
-        document.querySelector('.custom-dialog').classList.add('hide');
-    });
+    }
+
+    optionsContainer.addEventListener('click', handleOptionClick);
 
     keys = {
         W: false,
@@ -417,7 +428,11 @@ function saveReportToFile(report) {
     const nombreArchivo = `reporte_${formatoFechaHora}.txt`;
 
     // Contenido del archivo de texto con saltos de línea
-    const contenido = report.replace(/\n/g, '\r\n') + `\r\nScore Final: ${player.score}\r\nFecha y hora: ${formatoFechaHora}\r\n`;
+    let promedioCorrectas = correctAnswers / totalAnswers;
+    let promedioIncorrectas = badAnswers / totalAnswers;
+    let porcentajeCorrectas = correctAnswers*100 / totalAnswers;
+    let porcentajeIncorrectas = badAnswers*100 / totalAnswers;
+    const contenido = report.replace(/\n/g, '\r\n') + `\r\nTotal Preguntas: ${totalAnswers}\r\n\r\nPreguntas Correctas: ${correctAnswers}\r\nPreguntas Incorrectas: ${badAnswers}\r\n\r\nPromedio Correctas: ${promedioCorrectas}\r\nPromedio Incorrectas: ${promedioIncorrectas}\r\n\r\nPorcentajes Correctas: ${porcentajeCorrectas}%\r\nPorcentajes Incorrectas: ${porcentajeIncorrectas}%\r\n\r\nScore Final: ${player.score}\r\nFecha y hora: ${formatoFechaHora}`;
 
     // Crear un objeto Blob con el contenido
     const blob = new Blob([contenido], { type: "text/plain" });
