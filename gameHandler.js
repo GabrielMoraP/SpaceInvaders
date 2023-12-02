@@ -231,7 +231,6 @@ function handleCollisionWithEnemy() {
             log += `Pregunta: ${problem}, Respuesta Correcta: ${e.target.dataset.answer}\n`;
             startGame(player.score, player.x, player.y);
         } else {
-            alert("si");
             badAnswers++;
             log += `Pregunta: ${problem}, Respuesta Erronea: ${e.target.dataset.answer}\n`;
             onGameOver();
